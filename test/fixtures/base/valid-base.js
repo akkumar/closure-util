@@ -1,7 +1,7 @@
-var foo = 'bar';
+const foo = 'bar';
 
 // this identifies goog base
-var goog = goog || {};
+const goog = goog || {};
 
 // the rest is unimportant
-var baz = 'bam';
+const baz = 'bam';

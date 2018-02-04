@@ -1,14 +1,14 @@
-var path = require('path');
+const path = require('path');
 
-var assert = require('../helper').assert;
+const assert = require('../helper').assert;
 
-var like = require('../../lib/util').like;
-var globs = require('../../lib/util').globs;
-var minimatches = require('../../lib/util').minimatches;
+const like = require('../../lib/util').like;
+const globs = require('../../lib/util').globs;
+const minimatches = require('../../lib/util').minimatches;
 
 describe('like', function() {
 
-  var node = {
+  const node = {
     type: 'ExpressionStatement',
     expression: {
       type: 'CallExpression',
@@ -29,11 +29,11 @@ describe('like', function() {
   };
 
   it('tests to see if a node matches a template', function() {
-    var pass = {
+    const pass = {
       type: 'ExpressionStatement',
       expression: '*'
     };
-    var fail = {
+    const fail = {
       type: 'CallExpression',
       expression: '*'
     };
@@ -42,7 +42,7 @@ describe('like', function() {
   });
 
   it('deep tests to see if a node matches a template', function() {
-    var pass = {
+    const pass = {
       type: 'ExpressionStatement',
       expression: {
         type: 'CallExpression',
@@ -61,7 +61,7 @@ describe('like', function() {
         arguments: [{type: 'Literal', value: '*'}]
       }
     };
-    var fail = {
+    const fail = {
       type: 'ExpressionStatement',
       expression: {
         type: 'CallExpression',
@@ -140,7 +140,7 @@ describe('like', function() {
   });
 });
 
-var fixtures = path.join(__dirname, '..', 'fixtures');
+const fixtures = path.join(__dirname, '..', 'fixtures');
 
 describe('globs', function() {
   it('matches files based on patterns', function(done) {

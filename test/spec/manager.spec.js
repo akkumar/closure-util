@@ -1,10 +1,10 @@
-var path = require('path');
+const path = require('path');
 
-var Manager = require('../../lib/manager').Manager;
-var helper = require('../helper');
+const Manager = require('../../lib/manager').Manager;
+const helper = require('../helper');
 
-var assert = helper.assert;
-var fixtures = path.join(__dirname, '..', 'fixtures');
+const assert = helper.assert;
+const fixtures = path.join(__dirname, '..', 'fixtures');
 
 describe('manager', function() {
 
@@ -12,7 +12,7 @@ describe('manager', function() {
 
     describe('constructor', function() {
       it('creates a Manager instance', function() {
-        var manager = new Manager({closure: false});
+        const manager = new Manager({closure: false});
 
         assert.instanceOf(manager, Manager);
       });
@@ -20,7 +20,7 @@ describe('manager', function() {
 
     describe('"ready" event', function() {
       it('is fired after scripts are parsed', function(done) {
-        var manager = new Manager({
+        const manager = new Manager({
           closure: false,
           cwd: fixtures,
           lib: 'dependencies/**/*.js'
@@ -34,7 +34,7 @@ describe('manager', function() {
 
     describe('"error" event', function() {
       it('is fired on initial parsing error', function(done) {
-        var manager = new Manager({
+        const manager = new Manager({
           closure: false,
           cwd: fixtures,
           lib: 'errors/**/*.js'
@@ -51,12 +51,12 @@ describe('manager', function() {
 
     describe('"beforewatch" event', function() {
       it('is fired before ready event', function(done) {
-        var manager = new Manager({
+        const manager = new Manager({
           closure: false,
           cwd: fixtures,
           lib: 'dependencies/**/*.js'
         });
-        var before = false;
+        let before = false;
         manager.on('error', done);
         manager.on('beforewatch', function() {
           before = true;
@@ -70,7 +70,7 @@ describe('manager', function() {
 
     describe('"close" event', function() {
       it('is fired after calling close', function(done) {
-        var manager = new Manager({
+        const manager = new Manager({
           closure: false,
           cwd: fixtures,
           lib: 'dependencies/**/*.js'
@@ -88,15 +88,15 @@ describe('manager', function() {
     describe('#getDependencies()', function() {
 
       it('sorts lib scripts', function(done) {
-        var manager = new Manager({
+        const manager = new Manager({
           closure: false,
           cwd: fixtures,
           lib: 'dependencies/**/*.js'
         });
         manager.on('error', done);
         manager.on('ready', function() {
-          var dependencies = manager.getDependencies();
-          var paths = dependencies.map(function(s) {
+          const dependencies = manager.getDependencies();
+          const paths = dependencies.map(function(s) {
             return path.basename(s.path);
           });
           assert.deepEqual(paths,
@@ -106,7 +106,7 @@ describe('manager', function() {
       });
 
       it('provides dependencies for a main script (car)', function(done) {
-        var manager = new Manager({
+        const manager = new Manager({
           closure: false,
           cwd: fixtures,
           lib: 'dependencies-main/+(lib|goog)/**/*.js',
@@ -114,9 +114,9 @@ describe('manager', function() {
         });
         manager.on('error', done);
         manager.on('ready', function() {
-          var dependencies = manager.getDependencies(
+          const dependencies = manager.getDependencies(
             path.join(fixtures, 'dependencies-main', 'main-car.js'));
-          var paths = dependencies.map(function(s) {
+          const paths = dependencies.map(function(s) {
             return path.basename(s.path);
           });
           assert.deepEqual(paths,
@@ -126,7 +126,7 @@ describe('manager', function() {
       });
 
       it('provides dependencies for a main script (boat)', function(done) {
-        var manager = new Manager({
+        const manager = new Manager({
           closure: false,
           cwd: fixtures,
           lib: 'dependencies-main/+(lib|goog)/**/*.js',
@@ -134,9 +134,9 @@ describe('manager', function() {
         });
         manager.on('error', done);
         manager.on('ready', function() {
-          var dependencies = manager.getDependencies(
+          const dependencies = manager.getDependencies(
             path.join(fixtures, 'dependencies-main', 'main-boat.js'));
-          var paths = dependencies.map(function(s) {
+          const paths = dependencies.map(function(s) {
             return path.basename(s.path);
           });
           assert.deepEqual(paths,
@@ -146,7 +146,7 @@ describe('manager', function() {
       });
 
       it('does not provide main scripts if not requested', function(done) {
-        var manager = new Manager({
+        const manager = new Manager({
           closure: false,
           cwd: fixtures,
           lib: 'dependencies-main/+(lib|goog)/**/*.js',
@@ -154,8 +154,8 @@ describe('manager', function() {
         });
         manager.on('error', done);
         manager.on('ready', function() {
-          var dependencies = manager.getDependencies();
-          var paths = dependencies.map(function(s) {
+          const dependencies = manager.getDependencies();
+          const paths = dependencies.map(function(s) {
             return path.basename(s.path);
           });
           assert.deepEqual(paths.slice(0, 3),
@@ -170,15 +170,15 @@ describe('manager', function() {
       });
 
       it('ignores files without requires or provides', function(done) {
-        var manager = new Manager({
+        const manager = new Manager({
           closure: false,
           cwd: fixtures,
           lib: 'dependencies-extra/**/*.js'
         });
         manager.on('error', done);
         manager.on('ready', function() {
-          var dependencies = manager.getDependencies();
-          var paths = dependencies.map(function(s) {
+          const dependencies = manager.getDependencies();
+          const paths = dependencies.map(function(s) {
             return path.basename(s.path);
           });
           assert.deepEqual(paths,
@@ -188,7 +188,7 @@ describe('manager', function() {
       });
 
       it('includes scripts with goog.addDependency calls', function(done) {
-        var manager = new Manager({
+        const manager = new Manager({
           closure: false,
           cwd: fixtures,
           lib: 'adds-deps/+(lib|goog)/**/*.js',
@@ -196,9 +196,9 @@ describe('manager', function() {
         });
         manager.on('error', done);
         manager.on('ready', function() {
-          var dependencies = manager.getDependencies(
+          const dependencies = manager.getDependencies(
             path.join(fixtures, 'adds-deps', 'main.js'));
-          var paths = dependencies.map(function(s) {
+          const paths = dependencies.map(function(s) {
             return path.basename(s.path);
           });
           assert.deepEqual(paths,
@@ -208,7 +208,7 @@ describe('manager', function() {
       });
 
       it('ignores requires when ignoreRequires matches', function(done) {
-        var manager = new Manager({
+        const manager = new Manager({
           closure: false,
           cwd: fixtures,
           lib: 'dependencies-ignoreRequires/**/*.js',
@@ -217,9 +217,9 @@ describe('manager', function() {
         });
         manager.on('error', done);
         manager.on('ready', function() {
-          var dependencies = manager.getDependencies(
+          const dependencies = manager.getDependencies(
             path.join(fixtures, 'dependencies-ignoreRequires', 'main.js'));
-          var paths = dependencies.map(function(s) {
+          const paths = dependencies.map(function(s) {
             return path.basename(s.path);
           });
           assert.deepEqual(paths,

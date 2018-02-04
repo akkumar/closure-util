@@ -1,14 +1,14 @@
-var path = require('path');
+const path = require('path');
 
-var request = require('supertest');
+const request = require('supertest');
 
-var Manager = require('../../lib/manager').Manager;
-var Server = require('../../lib/server').Server;
+const Manager = require('../../lib/manager').Manager;
+const Server = require('../../lib/server').Server;
 
-var helper = require('../helper');
+const helper = require('../helper');
 
-var assert = helper.assert;
-var fixtures = path.join(__dirname, '..', 'fixtures');
+const assert = helper.assert;
+const fixtures = path.join(__dirname, '..', 'fixtures');
 
 describe('server', function() {
 
@@ -16,7 +16,7 @@ describe('server', function() {
 
     describe('constructor', function() {
       it('creates a Server instance', function() {
-        var server = new Server({
+        const server = new Server({
           manager: new Manager({
             closure: false,
             cwd: fixtures
@@ -29,7 +29,7 @@ describe('server', function() {
 
     describe('serves static files', function() {
       it('returns the file', function(done) {
-        var server = new Server({
+        const server = new Server({
           manager: new Manager({
             closure: false,
             cwd: fixtures

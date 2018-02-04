@@ -1,10 +1,10 @@
-var path = require('path');
+const path = require('path');
 
-var scripts = require('../../lib/scripts');
-var helper = require('../helper');
+const scripts = require('../../lib/scripts');
+const helper = require('../helper');
 
-var assert = helper.assert;
-var fixtures = path.join(__dirname, '..', 'fixtures');
+const assert = helper.assert;
+const fixtures = path.join(__dirname, '..', 'fixtures');
 
 describe('scripts', function() {
 
@@ -12,7 +12,7 @@ describe('scripts', function() {
 
     describe('constructor', function() {
       it('creates a Script instance', function() {
-        var s = new scripts.Script({path: '/foo', source: 'bar'});
+        const s = new scripts.Script({path: '/foo', source: 'bar'});
 
         assert.instanceOf(s, scripts.Script);
         assert.equal(s.path, '/foo');
@@ -22,7 +22,7 @@ describe('scripts', function() {
 
     describe('#_ast', function() {
 
-      var script;
+      let script;
       before(function(done) {
         scripts.read(path.join(fixtures, 'basic', 'one.js'), function(err, s) {
           script = s;
@@ -31,16 +31,16 @@ describe('scripts', function() {
       });
 
       it('is the AST', function() {
-        var ast = script._ast;
+        const ast = script._ast;
         assert.equal(ast.type, 'Program');
         assert.lengthOf(ast.body, 5);
       });
 
       it('resolves to the same AST on multiple calls', function() {
-        var ast = script._ast;
+        const ast = script._ast;
         assert.equal(ast.body[0].type, 'ExpressionStatement');
 
-        var provide = ast.body[0].expression;
+        const provide = ast.body[0].expression;
         assert.equal(provide.type, 'CallExpression');
         assert.equal(provide.callee.type, 'MemberExpression');
         assert.isFalse(provide.callee.computed);
@@ -50,7 +50,7 @@ describe('scripts', function() {
         assert.equal(provide.callee.property.type, 'Identifier');
         assert.equal(provide.callee.property.name, 'provide');
 
-        var args = provide.arguments;
+        const args = provide.arguments;
         assert.lengthOf(args, 1);
         assert.equal(args[0].type, 'Literal');
         assert.equal(args[0].value, 'basic.one');
@@ -61,7 +61,7 @@ describe('scripts', function() {
     describe('#addsDependencies', function() {
 
       it('is true for scripts with goog.addDependency calls', function(done) {
-        var p = path.join(fixtures, 'adds-deps', 'goog', 'deps.js');
+        const p = path.join(fixtures, 'adds-deps', 'goog', 'deps.js');
         scripts.read(p, function(err, script) {
           if (err) {
             done(err);
@@ -73,7 +73,7 @@ describe('scripts', function() {
       });
 
       it('is false with no goog.addDependency calls', function(done) {
-        var p = path.join(fixtures, 'adds-deps', 'main.js');
+        const p = path.join(fixtures, 'adds-deps', 'main.js');
         scripts.read(p, function(err, script) {
           if (err) {
             done(err);
@@ -87,7 +87,7 @@ describe('scripts', function() {
     });
 
     describe('#provides', function() {
-      var script;
+      let script;
 
       before(function(done) {
         scripts.read(path.join(fixtures, 'basic', 'one.js'), function(err, s) {
@@ -127,7 +127,7 @@ describe('scripts', function() {
     });
 
     describe('#requires', function() {
-      var script;
+      let script;
 
       before(function(done) {
         scripts.read(path.join(fixtures, 'basic', 'one.js'), function(err, s) {

@@ -1,24 +1,24 @@
-var http = require('http');
-var path = require('path');
+const http = require('http');
+const path = require('path');
 
-var assert = require('../helper').assert;
+const assert = require('../helper').assert;
 
-var closure = require('../../lib');
+const closure = require('../../lib');
 
-var fixtures = path.join(__dirname, '..', 'fixtures');
+const fixtures = path.join(__dirname, '..', 'fixtures');
 
 describe('The API', function() {
 
   describe('Manager', function() {
     it('provides a manager for parsing and watching scripts', function() {
-      var manager = new closure.Manager({closure: false});
+      const manager = new closure.Manager({closure: false});
       assert.instanceOf(manager, closure.Manager);
     });
   });
 
   describe('Server', function() {
     it('provides a debug server', function() {
-      var server = new closure.Server({
+      const server = new closure.Server({
         manager: null
       });
       assert.instanceOf(server, closure.Server);
@@ -34,13 +34,13 @@ describe('The API', function() {
 
   describe('getDependencies()', function() {
     it('generates a list of scripts in dependency order', function(done) {
-      var config = {
+      const config = {
         closure: false,
         cwd: fixtures,
         lib: 'dependencies/**/*.js'
       };
       closure.getDependencies(config, function(err, paths) {
-        var names = paths.map(function(s) {
+        const names = paths.map(function(s) {
           return path.basename(s);
         });
         assert.deepEqual(names,
