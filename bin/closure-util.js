@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-var log = require('npmlog');
-var parser = require('nomnom');
+const log = require('npmlog');
+const parser = require('nomnom');
 
-var deps = require('../lib/deps');
-var build = require('../lib/build');
-var serve = require('../lib/serve');
+const deps = require('../lib/deps');
+const build = require('../lib/build');
+const serve = require('../lib/serve');
 
 parser.options({
   loglevel: {
@@ -37,7 +37,7 @@ parser.command('update-library').callback(function() {
 }).help('Update the Library');
 
 parser.command('update').callback(function() {
-  var done = 0;
+  let done = 0;
   deps.updateCompiler(function(err, dir) {
     if (err) {
       log.error('closure-util', err.message);
@@ -72,8 +72,8 @@ parser.command('build')
     help: 'Output file path'
   })
   .callback(function(opts) {
-    var configFile = opts.config;
-    var outputFile = opts.output;
+    const configFile = opts.config;
+    const outputFile = opts.output;
     build(configFile, outputFile, function(err) {
       if (err) {
         log.error('closure-util', err.message);
@@ -90,7 +90,7 @@ parser.command('serve')
     help: 'Path to JSON config file'
   })
   .callback(function(opts) {
-    var configFile = opts.config;
+    const configFile = opts.config;
     serve(configFile, function(err) {
       if (err) {
         log.error('closure-util', err.message);
@@ -99,7 +99,7 @@ parser.command('serve')
     });
   }).help('Start the development server');
 
-var options = parser.parse();
+const options = parser.parse();
 
 /**
  * Configurable log level.
